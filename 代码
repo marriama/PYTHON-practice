@@ -1,0 +1,51 @@
+import random
+import os
+from PIL import Image
+pics=os.listdir(r"C:\Users\19466\Desktop\照片墙")
+for i in range(0,9):
+    img=Image.open("C:\\Users\\19466\\Desktop\\照片墙\\"+pics[i])
+    h=img.height
+    
+    if i<7:
+        for k in range(0,7):
+            box=(0,k*h/7,960,(k+1)*h/7)
+            cuts=img.crop(box)
+            m=str(i)
+            n=str(k)
+            cuts.save("C:\\Users\\19466\\Desktop\\output\\"+m+" "+n+".jpg")
+    else:
+        for k in range(0,8):
+            box=(0,k*h/8,960,(k+1)*h/8)
+            cuts=img.crop(box)
+            m=str(i)
+            n=str(k)
+            cuts.save("C:\\Users\\19466\\Desktop\\output\\"+m+" "+n+".jpg")
+import random
+#设定图片形状
+fig=[
+     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+     [0,1,0,1,1,1,1,0,1,1,1,1,0,1,1,1,1,0],
+     [0,1,0,1,0,0,1,0,1,0,0,1,0,1,0,0,1,0],
+     [0,1,0,1,0,0,1,0,1,0,0,1,0,1,0,0,1,0],
+     [0,1,0,1,1,1,1,0,1,1,1,1,0,1,1,1,1,0],
+     [0,1,0,0,0,0,1,0,1,0,0,1,0,0,0,0,1,0],
+     [0,1,0,0,0,0,1,0,1,0,0,1,0,0,0,0,1,0],
+     [0,1,0,1,1,1,1,0,1,1,1,1,0,1,1,1,1,0],
+     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+     ]
+# 图片尺寸 像素
+PIC_WIDTH, PIC_HEIGHT = 100,100
+# 行数  列数
+row_num, column_num = len(fig),len(fig[0])
+# 背景读取 设置尺寸
+img = Image.open("C:\\Users\\19466\\Desktop\\back.jpg").resize((column_num*PIC_WIDTH, row_num*PIC_HEIGHT))
+#读取照片名
+image_names = os.listdir("C:\\Users\\19466\\Desktop\\output")
+for row in range(row_num):
+    for column in range(column_num):
+        if fig[row][column]:
+#引入random库，使output文件中的图片随机出现
+            pic = Image.open("C:\\Users\\19466\\Desktop\\output\\"+ random.choice(image_names)).resize((PIC_WIDTH, PIC_HEIGHT))
+            img.paste(pic, (PIC_WIDTH * column, PIC_HEIGHT * row))
+ #保存为png格式图片
+img.save("C:\\Users\\19466\\Desktop\\1989 v2.png")
